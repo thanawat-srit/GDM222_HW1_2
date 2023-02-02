@@ -23,30 +23,32 @@
     static double[] XY(double x_1, double y_1, double x_2, double y_2, double r, double radians, ref int n)
     {
         double[] xy = { x_1, y_1, x_2, y_2 };
+
         double dx = r * Math.Cos(radians);
         double dy = r * Math.Sin(radians);
+
         if (n != 0)
         {
             n--;
 
-            if (x_2 > x_1 && y_2 > y_1)
+            if (x_2 > x_1 && y_2 >= y_1)
             {
                 xy = XY(x_1 - dx / 2, y_1 + dy / 2, x_1 - dy, y_1 + dx, r / 2, radians + Math.PI / 2, ref n);
 
             }
-            else if (x_2 < x_1 && y_2 > y_1)
+            else if (x_2 <= x_1 && y_2 > y_1)
             {
-                xy = XY(x_1 - dx / 2, y_1 - dy / 2, x_1 - dy, y_1 - dx, r / 2, radians + Math.PI / 2, ref n);
+                xy = XY(x_1 + dx / 2, y_1 - dy / 2, x_1 - dy, y_1 + dx, r / 2, radians + Math.PI / 2, ref n);
 
             }
-            else if (x_2 < x_1 && y_2 < y_1)
+            else if (x_2 < x_1 && y_2 <= y_1)
+            {
+                xy = XY(x_1 - dx / 2, y_1 + dy / 2, x_1 - dy, y_1 + dx, r / 2, radians + Math.PI / 2, ref n);
+
+            }
+            else if (x_2 >= x_1 && y_2 < y_1)
             {
                 xy = XY(x_1 + dx / 2, y_1 - dy / 2, x_1 + dy, y_1 - dx, r / 2, radians + Math.PI / 2, ref n);
-
-            }
-            else if (x_2 < x_1 && y_2 > y_1)
-            {
-                xy = XY(x_1 + dx / 2, y_1 + dy / 2, x_1 + dy, y_1 + dx, r / 2, radians + Math.PI / 2, ref n);
 
             }
         }
